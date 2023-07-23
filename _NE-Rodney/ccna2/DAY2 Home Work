@@ -327,3 +327,69 @@ end
 show ip bgp summary
 show ip bgp neighbor
 show ip route bgp
+
+Task5: how to comunicate eigrp,ospf,bgp
+r4#sh ip route ospf
+O IA
+O IA
+R1#
+config t
+router ospf 1
+default-information originate
+
+R4#sh ip route os
+O*E2
+O IA
+O IA
+
+you can now ping 8.8.8.8 from R4
+traceroute 8.8.8.8 from R4
+
+2 way route redistribution
+
+R4#
+sh int e1/0
+
+"MTU 1500 bytes, BW 10000 kbit/sec, DLY 1000 sec, reliability 255/255, txload 1/255, rxload 1/255"-you need this
+
+config t
+router eigrp 100
+redistribute ospf 1 metric 10000(BW) 100 (DLY less 1 zero) 255(reliability) 1(loading) 1500(MTU)
+"all ospf route will get inside eigrp"
+
+D1#sh ip route eigrp
+D*EX
+D EX
+D
+
+R3#sh ip route ospf
+O*E2
+O IA
+
+R4#
+config t
+router ospf 1
+redistribute eigrp 100 SUBnets
+end
+
+R3#sh ip route ospf
+O*E2
+O IA
+O E2
+O E2
+
+P1#
+***default route***
+config t
+ ip route 0.0.0.0 0.0.0.0 10.2.1.1
+end
+
+show ip route 
+S*  0.0.0.0/0 [1/0] via 10.2.1.1
+
+ping 8.8.8.8
+traceroute 8.8.8.8
+
+P2#
+ping 8.8.8.8
+traceroute 8.8.8.8
