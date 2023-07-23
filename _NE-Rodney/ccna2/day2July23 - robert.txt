@@ -1,0 +1,339 @@
+Day2: Fundamentals of Network Design:
+Usage:
+- 9/10 job interviews is based on this
+- 50% of the exam have this.
+- _____________________ ?
+
+step1: palitan ang ulo mo ?
+0-9
+Tubig/gas    IPv4:0-255     IPv6:0-f        
+000000      0.0.0.0          :0000:
+007999      7.255.255.255     7fff
+008000      8.0.0.0          :8000:
+008001      8.0.0.1           8001
+
+005998      125.0.254.255     7afd
+005999      125.0.255.0       7afe
+006000      125.0.255.1       7aff
+006001      125.0.255.2       7b00
+
+099998      127.255.255.254   affd
+099999      127.255.255.255   affe
+100000      128.0.0.0         afff
+100001      128.0.0.1         b000
+
+task2: Mastering IPv4(Good up to 2027)
+learn and master decimal to binary to Hex:
+2 methods: World Method(USA,Cisco,EU,Jp) vs 
+Rivan Method(HomeMade: rob)
+/1 = 128.0.0.0	/5 = 248.0.0.0
+/2 = 192.0.0.0  /6 =  252.0.0.0
+/3 = 224.0.0.0  /7 = 254.0.0.0
+/4 = 240.0.0.0  /8 = 255.0.0.0
+
+TASK3: bIT length Mastery:
+
+convert to bits:
+195 = 8b
+13 =   4b
+1750 = 11b 
+855 =  10b
+2,700 =  12b
+2 =  2b
+376 = 9b
+888 = 10b
+8 =  4b
+212 =  8b
+4,500 = 13b
+81 =  7b
+20,000  =  15b
+55 = 6b
+
+TASK4: Exam and Job Interview Questions:
+Q1: what are the RFC1918/Private IP address
+Non-internet Routable IP address:
+cmd
+tracert www.x-art.com
+10.0.0.0/8  => worlds Biggest companies: 16M
+172.16.0.0/16 => mgaTanga: 65thost
+192.168.--.0/24 => Dukha! : 254host
+
+Q2: what are Public IP address:
+Internet routable IP address used to connect
+to the internet:
+
+NotPrivate; 
+dns public iP address:
+1.1.1.1
+8.8.8.8
+208.67.222.222
+208.67.220.220
+NOporn:
+208.67.222.123
+208.67.220.123
+
+TASK5: IPV4 SUBNETTING REALWOLD:
+EX1: Design and Implement. accenture.com
+need 750 agents,TLs,QAs callcenter. 
+10.0.0.0/8 -> 16,777,214 host
+SOLUTION: world method vs Rivanmethod
+CSi: ConvertIT,Subract,IPasoksaHiwa
+CONVERT IT: 750 --> 10 bits
+SUBTRACT IT: /32 - /10 =/22 ,3rd,4i
+ipasok 4i sa 3rd hiwa:
+AccentureNetwork: 10.0.4.0/22 +1
+1st:              10.0.4.1
+last/broadcast:   10.0.7.255
+NOTaccenture.com: 10.0.8.0/22 -1
+
+Ex2: design a subnet for sykes.com
+using 10.0.0.0/8 with 2500 devices:
+C: 2500 iss ___ bits
+S: /32 - /12 = /20
+i:
+SYKES.COM: 10.0.16.0/20 +1
+1ST: 10.0.16.1
+LAST: 10.0.31.255
+NOTSYKES.COM: 10.0.32.0/20 -1
+
+eX3: DESIGN a network for telus.com
+using 10.0.0.0/8 with 388 host only.
+for a pilot office:
+C: 388 is 9
+S: /32 - /9 = 23, 3rd,2i
+i:ipasok 2i sa 3rd:
+telus.com: 10.0.2.0/23
+1st: 10.0.2.1
+last: 10.0.3.255
+NOTtelus.com: 10.0.4.0/23
+config t
+vlan 25
+ name TELUS.COM
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.2.1 255.255.254.0
+ip dhcp excluded-add 10.0.2.1  10.0.2.100
+ip dhcp pool TELUS.COM
+ network 10.0.2.0 255.255.254.0
+ default-router 10.0.2.1
+ domain-name TELUS.COM
+ dns-server 10.m.1.10
+ option 150 ip 10.m.100.8
+ Int Fa 0/5
+  swi acc vlan 25
+  do sh ip dhcp binding
+
+
+
+
+SubnetDesignImplentationTemplate:
+config t
+vlan __
+ name _____.com
+ exit
+Int vlan __
+ no shut
+ ip add 10.0._._ 255.255._._
+ip dhcp excluded-add 10.0._._  10.0._._
+ip dhcp pool _____.com
+ network 10.0._._ 255.255._._
+ default-router 10.0._._
+ domain-name ____.com
+ dns-server 10.m.1.10
+ option 150 ip 10.m.100.8
+ Int Fa 0/7
+  swi acc vlan 25
+  do sh ip dhcp binding
+
+Ex4: Desing PNP.GOV.PH emergency callcenter
+using 10.0.0.0/8 with only 220 CallAgents.
+C: 220 is 8bits
+S /32 - /8 = /24, 3rd,1i
+ipasoki 1i sa 3rd:
+PNP.GOV.PH; 10.0.1.0/24
+1st: 10.0.1.1
+last: 10.0.1.255
+notPNP.GOV.PH: 10.0.2.0/24
+config t
+vlan 25
+ name PNP.GOV.PH
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0._._ 255.255._._
+ip dhcp excluded-add 10.0._._  10.0._._
+ip dhcp pool PNP.GOV.PH
+ network 10.0._._ 255.255._._
+ default-router 10.0._._
+ domain-name PNP.GOV.PH
+ dns-server 10.m.1.10
+ option 150 ip 10.m.100.8
+ Int Fa 0/5
+  swi acc vlan 25
+  do sh ip dhcp binding
+
+EX5. design A 4800 CALLCENTER FOR 
+ALORICA.COM bpo using 10.0.0.0/8
+c: 4800 IS 13
+s: /32 - /13 = 19, 3RD,32I
+I:IPASOK 32 SA 3RD:
+!!
+ALORICA.COM: 10.0.32.0/19
+10.0.32.1
+10.0.63.255
+NOTALORICA.COM: 10.0.64.0/19
+
+EX6: Design a small BPO project
+for NBI.GOV.PH with only 50+ call: 10%, 1st five:
+agents.
+C 50 is 6 bits
+S /32 - /6 = > /26, 4th, 64i
+i:ipasok 64 sa 4th:
+NBI.GOV.PH: 10.0.0.64
+1st: 10.0.0.65
+last: 10.0.0.127
+notNBI.GOV.PH/; 10.0.0.128
+config t
+vlan 25
+ name NBI.GOV.PH 
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.0.65 255.255.255.192
+ip dhcp excluded-add 10.0.0.65 10.0.0.69
+ip dhcp pool NBI.GOV.PH 
+ network 10.0.0.64 255.255.255.192
+ default-router 10.0.0.65
+ domain-name NBI.GOV.PH 
+ dns-server 10.m.1.10
+ option 150 ip 10.m.100.8
+ Int Fa 0/7
+  swi acc vlan 25
+  do sh ip dhcp binding
+
+TASK6: SUBNETTING IN THE CLOUD/AWS/AZURE
+@D1: 5 dns servers:
+c" 5 is 3bits
+s /32-/3 = /29 4th,8i
+ipasok 8i sa 4th:
+dnsservers: 10.0.0.8/29
+1st: 10.0.0.9
+last: 10.0.0.15
+NOTdnserver: 10.0.0.16/29
+@d1:
+config t
+vlan 25
+ name DNSSERVERS
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.0.9 255.255.255.248
+ip dhcp excluded-add 10.0.0.9  10.0.0.9
+ip dhcp pool DNSSERVERS
+ network 10.0.0.8 255.255.255.248
+ default-router 10.0.0.9
+ domain-name DNSSERVERS.com
+ Int E1/0
+  swi mode access
+  swi acc vlan 25
+  do sh ip dhcp binding
+@s1:
+CONFIG T
+int e1/0
+ ip add dhcp
+ no shut
+ do sh ip int brief | ex una
+
+TASK7: MODERN NETWORK ENGINEERS IPV6 Experts:
+step1:
+decimal:0-255      binary:0/1        Hex:0-f
+
+
+1. 000a:000c:0000:0000:0000:0000:0000:0000/64 =
+   a:c:: /64
+2. 0000:0000:0000:0000:0000:0000:0000:0000/0 = 
+        ::/0
+3. fe80:0000:0000:0000:000a:0000:0000:000f/64 =
+      fe80::a:0:0:f /64
+4. 2002:6500:0000:3000:0000:0000:0000:0000/64 = 
+     2002:6500:0:3000:: /64
+5. 0000:0000:0000:0000:0000:0000:0000:0001/128 = 
+       ::1 /128
+6. ff00:0000:0000:beef:a00a:0aa0:0000:0000/8 = 
+     ff00:0:0:beef:a00a:aa0:: /8
+
+HOW TO CONFIGUE IPV6 IN Cisco:
+Method1: IPv6 static IPv6: tao nag Isip:
+@d1
+config t
+ipv6 unicast-routing
+int vlan 25
+ ipv6 address face:cafe:fafa:caca::a/64
+end
+
+@s1:
+config t
+ipv6 unicast-routing
+int e1/0
+ ipv6 address face:cafe:fafa:caca::f/64
+
+Method: EUI-64:Extended Unique Identifier (EUI)
+        tao + computer:
+
+D1:
+config t
+ipv6 unicast-routing
+int vlan 25
+ ipv6 address face:cafe:fafa:caca::a/64
+ ipv6 address baca:baca:1111:2222::/64 eui-64
+ ipv6 address autoconfig
+end
+
+s1:
+config t
+ipv6 unicast-routing
+int e1/0
+ ipv6 address face:cafe:fafa:caca::f/64
+ ipv6 address baca:baca:1111:2222::/64 eui-64
+ ipv6 address autoconfig
+end
+
+TASK8: Domain name System or DNS server Configuration:
+step1: install dns server on windows server2022:
+cmd
+powershell
+Install-WindowsFeature -Name DNS -IncludeManagementTools
+True
+DNS server records all Names and IP address in to a 
+zone database/zonefile.
+
+most important DNS records:
+
+dns
+____
+www.gmail.com
+smtp.gmail.com
+imap.gmail.com
+pop.gmail.com
+MX
+
+TASK9: ALL WEBSITES NEED DNS TO BE SURFED:
+Make a website for massage with happy ending
+cmd
+powershell
+cd\
+New-website -name "happyend" -hostheader "www.ccnaM.com.ph"
+            -physicalpath "d:\webs\datingbiz"
+
+
+M TO FRIDAY
+
+P1  TO  P5
+
+
+
+
+
+
+
