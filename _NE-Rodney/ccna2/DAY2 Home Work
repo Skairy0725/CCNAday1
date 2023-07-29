@@ -357,6 +357,11 @@ sh int e1/0
 config t
 router eigrp 100
 redistribute ospf 1 metric 10000(BW) 100 (DLY less 1 zero) 255(reliability) 1(loading) 1500(MTU)
+
+config t
+router eigrp 100
+redistribute ospf 1 metric 10000 100 255 1 1500
+end
 "all ospf route will get inside eigrp"
 
 D1#sh ip route eigrp
