@@ -224,6 +224,7 @@ router bgp 1
  neighbor 208.8.8.4 remote-as 45
  neighbor 207.7.7.2 remote-as 2
  neighbor 209.9.9.3 remote-as 3
+ network 1.1.1.1 Mask 255.255.255.255
  network 10.0.0.0 Mask 255.255.255.252
  network 207.7.7.0 Mask 255.255.255.0
  network 208.8.8.0 Mask 255.255.255.0
@@ -327,14 +328,18 @@ router bgp 45
 end
 
 show ip bgp summary
+ - Up/Down = "Oras" / BAD = "Words"
 show ip bgp neighbor
+ - BGP Established
 show ip route bgp
+ - 11 routes including *B / totoong buhay libo
 
 Task5: how to comunicate eigrp,ospf,bgp
+OSPF is the best partner for BGP, Because OSPF can create single default router for BGP:
 r4#sh ip route ospf
 O IA
 O IA
-R1#
+R1# 4000 XB --> 1xOE2
 config t
 router ospf 1
 default-information originate
@@ -347,17 +352,17 @@ O IA
 you can now ping 8.8.8.8 from R4
 traceroute 8.8.8.8 from R4
 
-2 way route redistribution
+
+2 way route/protocol redistribution
 
 R4#
 sh int e1/0
 
 "MTU 1500 bytes, BW 10000 kbit/sec, DLY 1000 sec, reliability 255/255, txload 1/255, rxload 1/255"-you need this
 
-config t
-router eigrp 100
-redistribute ospf 1 metric 10000(BW) 100 (DLY less 1 zero) 255(reliability) 1(loading) 1500(MTU)
-
+!config t
+!router eigrp 100
+!redistribute ospf 1 metric 10000(BW) 100 (DLY less 1 zero) 255(reliability) 1(loading) 1500(MTU)
 config t
 router eigrp 100
 redistribute ospf 1 metric 10000 100 255 1 1500
@@ -373,10 +378,10 @@ R3#sh ip route ospf
 O*E2
 O IA
 
-R4#
+R4# D --> O*E2
 config t
 router ospf 1
-redistribute eigrp 100 SUBnets
+redistribute eigrp 100 subnets
 end
 
 R3#sh ip route ospf
@@ -384,6 +389,37 @@ O*E2
 O IA
 O E2
 O E2
+
+iBGP - internal BGP
+eBGP - external BGP
+mBGP - multi BGP
+
+ROUTING: static,eigrp,ospf,bgp
+vs SITE to SITE VPN
+Routing: Fast, Stable, Dedicated = Very Fucking Expensive
+Site to Site: Super Mura!
+
+What is VPN: encryption + hashing + tunneling
+     sysmetric     sha1/md5   IPSEC,GRE,PPTP
+     astmmetric    sha256
+     "AES128/256"
+
+JPLINUX:
+sudo ifconfig eth0 10.10.10.10 netmask 255.255.255.0 up
+sudo route add default gw 10.10.10.1
+
+PHLINUX:
+sudo ifconfig eth0 10.20.20.20 netmask 255.255.255.0 up
+sudo route add default gw 10.20.20.1
+
+STEP2: Configure jpvpn/phvpn for Basic IP
+
+config t
+no logging console
+no ip domain-lookup
+int gi 2
+no shut
+ip add dhcp
 
 P1#
 ***default route***
@@ -400,3 +436,12 @@ traceroute 8.8.8.8
 P2#
 ping 8.8.8.8
 traceroute 8.8.8.8
+
+
+ERASE ng CONFIG
+
+Corebaba/CUCM/EdgeRouter
+
+erase startup-config (enter)
+reload (no) (enter)
+
