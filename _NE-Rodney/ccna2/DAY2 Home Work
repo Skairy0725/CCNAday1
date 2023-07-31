@@ -414,12 +414,33 @@ sudo route add default gw 10.20.20.1
 
 STEP2: Configure jpvpn/phvpn for Basic IP
 
+JPNVPN
 config t
 no logging console
 no ip domain-lookup
+int gi 1
+no shut
+ip add 200.0.0.1 255.255.255.0
 int gi 2
 no shut
 ip add dhcp
+int gi 3
+ip add 10.10.10.1
+end
+
+PHIVPN
+config t
+no logging console
+no ip domain-lookup
+int gi 1
+no shut
+ip add 200.0.0.2 255.255.255.0
+int gi 2
+no shut
+ip add dhcp
+int gi 3
+ip add 10.20.20.1
+end
 
 P1#
 ***default route***
