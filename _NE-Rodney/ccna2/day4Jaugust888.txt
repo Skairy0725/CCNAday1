@@ -1,0 +1,577 @@
+DAY4: NETWORK CYBER SECURITY FUNDAMENTALS
+TASK1: THE PAPER THE WILL CHANGE YOUR LIFE:
+osi mastery = iMPRESSIVE job interview:
+
+TASK2: Fundmental of Cisco Security:
+what you to know:
+config t
+username admin privilege 15 secret pass
+ip http server
+ip http secure-server
+do wr
+
+TASK3: INTRODUCTION CISCO FIREWALL:
+FIREWALL: anything unfair: 
+Cisco FW:
+level1: standard acl
+level2; extended acl ---> ccna
+level3: zone base FW acl --> ccnpSec
+level4: ASA firewall --> ccnpSec
+level5: Firepower Firewall --> ccnpSec
+Cisco ASA/FTD=PaloAlto,Fortinet,ChkPoint,
+              14th choice: sophos 
+              dukha/HL: pfsense, 
+
+Cisco Standard ACL: blocks/permits
+Source IP address:
+RULE1: to be safe Block all ip address of
+       "GAGONG BANSA": NK, RUS, CHINA,nigeria
+                       Israel:
+ex1. create a standard acl(1-99) policy to block other
+  column:
+@EDGE:
+config t
+no access-list 1
+access-list 1 deny 10.k1.0.0 0.0.255.255
+access-list 1 deny 10.k2.0.0 0.0.255.255
+access-list 1 deny 10.k3.0.0 0.0.255.255
+access-list 1 deny 10.k4.0.0 0.0.255.255
+access-list 1 deny 10.k5.0.0 0.0.255.255
+access-list 1 deny 10.k6.0.0 0.0.255.255
+access-list 1 perm Any
+int gi 0/0/1
+ip access-group 1 in
+do sh ip access-list 1
+
+FrendsLAHAT:
+config t
+int gi 0/0/1
+NO ip access-group 1 in
+do sh ip access-list 1
+
+ex2:
+config t
+no access-list 2
+access-list 2 deny 10.k1.0.0 0.0.255.255
+access-list 2 deny 10.k2.0.0 0.0.255.255
+access-list 2 deny 10.k3.0.0 0.0.255.255
+access-list 2 deny 10.k4.0.0 0.0.255.255
+access-list 2 deny 10.k5.0.0 0.0.255.255
+access-list 2 deny 10.k6.0.0 0.0.255.255
+access-list 2 perm Any
+int gi 0/0/1
+ip access-group 2 in
+do sh ip access-list 1
+
+ex2:
+config t
+no access-list 3
+access-list 3 deny 10.k1.0.0 0.0.255.255
+access-list 3 deny 10.k2.0.0 0.0.255.255
+access-list 3 deny 10.k3.0.0 0.0.255.255
+access-list 3 deny 10.k4.0.0 0.0.255.255
+access-list 3 deny 10.k5.0.0 0.0.255.255
+access-list 3 deny 10.k6.0.0 0.0.255.255
+access-list 3 deny 10.k7.0.0 0.0.255.255
+access-list 3 deny 10.k8.0.0 0.0.255.255
+access-list 3 perm Any
+int gi 0/0/1
+ip access-group 3 in
+do sh ip access-list 1
+
+If KOnti ang permit, DAMI deny:
+config t
+no access-list 4
+access-list 4 permit 10.k1.0.0 0.0.255.255
+int gi 0/0/1
+ip access-group 4 in
+do sh ip access-list 4
+
+frends:
+int gi 0/0/1
+no ip access-group 5 in
+
+TASK4: HOW TO START A CAREER IN NETWORK CYBERSECURITY FOR FREE!!
+intentionally hackable websites
+1. Hack The Box
+2. CTFlearn
+3. bWAPP
+4. HackThisSite
+5. Google Gruyere
+6. Damn Vulnerable iOS App - DVIA
+7. Hellbound Hackers
+8. OWASP Mutillidae II
+9. HackThis!!
+
+task6: How to Make CUCM intentionally hackable to Learn
+the Basics for Firewalls.
+before: nmap -v 10.m.100.8
+@Cucm:
+config t
+int fa 0/0
+ ip add 10.m.100.9 255.255.255.0 Secondary
+service finger
+service tcp-small-servers
+service udp-small-servers
+ip dns server
+ip http server
+ip http secure-server
+!Make Ping EASY
+ip host pc 10.m.1.10
+ip host cm 10.m.100.8
+ip host cm2 10.m.100.9
+ip host p1 10.m.100.103
+ip host p2 10.m.100.105
+ip host sw 10.m.1.4
+ip host ed 10.m.m.1
+
+TASK7: Cisco Packet filter firewall 
+extended Access-control list: 100-199
+ex1.create a firewall policy to
+allow these business req:
+cm allow http, telnet, sccp only
+cm2 allows ssh, dns/domain, icmp
+FORMULA     PROTOCOL     HACKER  VICTIM   PORT:
+@cucm:  tcp,udp,icmp,IP   any    host      __
+config t
+no access-list 100
+access-list 100 permit tcp Any host cm eq 80
+access-list 100 permit tcp Any host cm eq 23
+access-list 100 permit tcp Any host cm eq 2000
+access-list 100 permit tcp Any host cm2 eq 22
+access-list 100 permit tcp Any host cm2 eq 53
+access-list 100 permit udp Any host cm2 eq 53
+access-list 100 permit icmp Any host cm2
+Int fa 0/0
+ ip access-group 100 in
+end
+
+noFW:
+config t
+Int fa 0/0
+ NO ip access-group 100 in
+end
+
+ex2.create a firewall policy to
+allow these business req:
+cm allow domain,ssh,sccp
+cm2 allows http, https, finger = 7lines
+config t
+no access-list 101
+access-list 101 permit tcp Any host cm eq 22
+access-list 101 permit tcp Any host cm eq 2000
+access-list 101 permit tcp Any host cm eq 53
+access-list 101 permit udp Any host cm eq 53
+access-list 101 permit tcp Any host cm2 eq 80
+access-list 101 permit tcp Any host cm2 eq 443
+access-list 101 permit tcp Any host cm2 eq 79
+Int fa 0/0
+ ip access-group 101 in
+end
+
+ex3.create a firewall policy to
+allow these business req:  ACCESS-LIST102
+cm allow telnet,ssh,
+cm2 allows https,http,finger,sccp
+config t
+
+ex4.create a firewall policy to
+allow these business req:  ACCESS-LIST104
+cm allow ping,web,sccp,dns
+cm2 allows telnet,ssh,finger,chargen = 9lines
+config t
+
+nmap -v cm         nmap -v cm2
+80,53,2000,ping    19,22,23,79
+
+EXAMQuestion: use acl 105:
+create a fw policy to allow these conditions:
+hackers: p1,p2,sw,pc  victim: cm
+firewallpOlicy:
+- p1 can sccp cm  
+- p2 can ping cm
+- pc can telnet,ssh,web cm
+- sw can ping,web cm
+_______________________
+    7 firewallLines:
+@acl105:
+config t
+no access-list 105
+access-list 105 permit tcp host p1 host cm eq 2000
+access-list 105 permit icmp host p2 host cm
+access-list 105 permit tcp host pc host cm eq 22
+access-list 105 permit tcp host pc host cm eq 23
+access-list 105 permit tcp host pc host cm eq 80
+access-list 105 permit icmp host sw host cm
+access-list 105 permit tcp host sw host cm eq 80
+Int fa 0/0
+ ip access-group 105 in
+ do sh ip access-list 105
+
+config t
+Int fa 0/0
+ NO ip access-group 105 in
+ do sh ip access-list 105 
+
+EXAMQuestion: use acl 106:
+create a fw policy to allow these conditions:
+hackers: p1,p2,sw,pc  victim: cm
+firewallpOlicy:
+- p1 can ping cm  
+- p2 can sccp cm
+- pc can domain,finger,sip cm
+- 10.m.100.4 can ping cm: cbaba: ping 10.m.100.8...
+- 10.m.100.4 can web cm2 cbaba:telnet 10.m.100.9 80
+____________________________
+
+@acl106:
+config t
+no access-list 106
+access-list 106 permit tcp host p2 host cm eq 2000
+access-list 106 permit icmp host p1 host cm
+access-list 106 permit tcp host pc host cm eq 53
+access-list 106 permit tcp host pc host cm eq 79
+access-list 106 permit tcp host pc host cm eq 5060
+access-list 106 permit icmp host 10.m.100.4 host cm
+access-list 106 permit tcp host 10.m.100.4 host cm2 eq 80
+Int fa 0/0
+ ip access-group 106 in
+ do sh ip access-list 106
+
+FRENDS AGAIN:
+Int fa 0/0
+NO  ip access-group 106 in
+ do sh ip access-list 106
+
+TASK5: REVIEW:
+standard ACL: blocks/permits IPaddress
+extended ACL: blk/permit ipadd,Ports
+ACL also si used to implement: site to site VPN:
+
+TASK6: EXAM QUESION 5 IN 1:
+1. dhcp server
+2. access list
+3. network time protocol
+4. ssh
+5. NAT: static Network address translation
+
+exam1: create a pool named 
+pool2 for vm2: 192.168.102.151 -0200
+config t
+line vty 0 14
+ exec-timeout 0 0
+ip dhcp excluded-add 192.168.102.1 192.168.102.150
+ip dhcp pool pool2
+ network 192.168.102.0 255.255.255.0
+ default-router 192.168.102.8
+ domain-name rivanit.com
+ dns-server 8.8.8.8
+ exit
+int gi 2
+ no shut
+ ip add 192.168.102.8 255.255.255.0
+int gi 3
+ no shut
+ ip add 192.168.103.8 255.255.255.0
+
+give STatic IP address on L1VM3:
+sudo ifconfig eth0 192.168.103.88 netmask 255.255.255.0 up
+sudo route add default gw 192.168.103.8 
+
+ExamLABno2:
+Create an access-list so that:
+
+192.168.102.151 can ping,ssh 192.168.103.8
+192.168.102.152 can web,https 192.168.103.8
+@exam5n1:
+config t
+no access-list 100
+access-list 100 perm icmp ho 192.168.102.151 ho 192.168.103.8
+access-list 100 perm tcp ho 192.168.102.151 ho 192.168.103.8 eq 22
+access-list 100 perm tcp ho 192.168.102.152 ho 192.168.103.8 eq 80
+access-list 100 perm tcp ho 192.168.102.152 ho 192.168.103.8 eq 443
+Int Gi 3
+ip access-group 100 OUT
+
+LAB3: NETWORK ADDRESS TRANSLATION:
+CONFIGURE NAT SO THAT ALL LINUX DEVICES 
+CAN HAVE INTERNET:
+step1: Give fast internet to 5in1:
+config t
+ip route 0.0.0.0 0.0.0.0 192.168.108.2
+ip domain-lookup
+ip name-server 8.8.8.8 1.1.1.1
+do ping www.nba.com
+
+step2: create a standard ACL to allow all linux:
+config t
+access-list 5 permit 192.168.102.0 0.0.0.255
+access-list 5 permit 192.168.103.0 0.0.0.255
+
+step3: Create a static NAT pool and Overload:
+inside:local       inside:global:
+192.168.102.151  192.168.108.69
+192.168.102.152  192.168.108.88
+192.168.103.8    192.168.108.__
+@
+config t
+ip nat inside source static 192.168.102.151 192.168.108.69
+ip nat inside source static 192.168.102.152 192.168.108.88
+ip nat inside source list 5 int gi 1 overload
+
+step4: define NAT INSIDE/ NAT OUTSIDE:
+config t
+int gi 1
+IP NAT OUTSIDE
+int gi 2
+IP NAT INSIDE
+int gi 3
+IP NAT INSIDE
+
+EXAM5N1#SH IP NAT TRANSlations 
+Pro  Inside global         Inside local          Outside local         Outside global
+---  192.168.108.88        192.168.102.152       ---                   ---
+---  192.168.108.69        192.168.102.151       ---                   ---
+icmp 192.168.108.69:1033   192.168.102.151:1033  1.1.1.1:1033          1.1.1.1:1033
+icmp 192.168.108.88:5641   192.168.102.152:5641  4.2.2.2:5641          4.2.2.2:5641
+icmp 192.168.108.129:6665  192.168.103.88:6665  
+
+LAB4:
+NETWORK TIME PROTOCOL:
+EXAM5N1#SHOW CLOCK 
+*14:57:27.389 UTC Sun Aug 6 2023 --> pst:
+CONFIGURE YOUR ROUTER TO USE AMERICAN PACIFIC STANRD TIME:
+
+TIME SERVER:  time.google.com
+
+
+config t
+ntp server  cn.pool.ntp.org
+end
+show ntp association
+sh clock
+show ntp status
+
+EXAMLABNO.5: secure shell/ssh protocol:
+TELNET IS BAD!!! NOT SECURE!!!
+
+How to configure SSH:
+config t
+ip domain-name secure.com
+crypto key generate rsa
+     ???512 xxx, 1024
+ip ssh version 2
+username ssh privilege 15 secret pass
+line vty 0 14
+login local
+
+TASK7: devops ARE former network engineers
+that has betrayed thier origins! traitor:
+alipin ng salapi! 
+
+DEVOPS = Network + linux + RestAPI + JSON
+         network programming/automation.
+         Postman
+
+HOmework: 5in1 lab bahay:
+
+CISCO Exam for 2023
+1.DHCP
+2. ssh enabling lab
+3. extended access-list
+4. NAT:
+
+Task1-B
+config t
+int gi 1
+no shut
+ip add dhcp
+int gi 2
+no shut
+ip add 192.168.102.8 255.255.255.0
+int gi 3
+no shut
+ip add 192.168.101.8 255.255.255.0 
+TASK1-A
+ip dhcp excluded-address 192.168.101.1 192.168.101.100
+ip dhcp pool vmnet1
+network 192.168.101.0 255.255.255.0
+default-router 192.168.101.8
+domain-name rivanit.com
+dns-server 8.8.8.8
+end
+
+TASK2: why ssh is better than telnet?
+config t
+ip domain name rivanit.com
+crypto key generate rsa
+ip ssh version 2
+username dave privilege 15 secret password
+kidlat ssh2 192.168.102.8 username: admin pass: password
+run TASK 1
+sh run | section dhcp
+sh ip int brief
+change linux to vmnet1
+sh ip dhcp binding
+
+TASK3:Lab3:
+Network address translation: sharing the internet
+sh ip route
+config t
+ip dns server
+ip name-server 1.1.1.1
+ip domain-lookup
+do ping google.com
+
+config t
+access-list 1 permit 192.168.101.0 0.0.0.255
+int gi 1
+ip nat outside
+int gi 3
+ip nat inside
+exit
+ip nat inside source list 1 int gi 1 overload
+end
+
+ACCESS LIST LAB:
+
+Task1:
+Post install command
+config t
+int gi 1
+no shut
+ip add dhcp
+int gi 2
+no shut
+ip add dhcp
+int gi 3
+no shut
+ip add dhcp
+end
+sh ip int brief
+note: wee need the gi1: bec, that is the management.
+
+Task2: we need to make aclLab hackable, so as we learn
+how to protect just as we learned in class
+|how to make cisco super hackable = openning unneccesary ports/services
+
+config t
+service finger
+service dhcp
+service tcp-small-servers
+service udp-small-servers
+ip dns server
+telephony-service
+!may not work on your image:
+ip http server
+ip http secure-server
+
+line vty 0 14
+no access-class GI1ONLY in
+
+Task3: Create standard Access-list to allow only telnet via the
+gi1 mangement port
+
+config t
+ip access-list standard GI1ONLY
+permit 192.168.108.0 0.0.0.255
+end
+
+config t
+access-list 1 permit 192.168.108.0 0.0.0.255
+
+apply ACL:
+config t
+line vty 0 14
+access-class GI1ONLY in
+sh access-list GI1ONLY
+
+config t
+ip http access-class 1
+
+Task4: make the AclLab be an web and secure routers.
+
+192.168.102.129 will only allow web and secure web
+
+192.168.103.129 will only allow ssh, dns, ping
+
+PROTOCOL HACKER VICTIM PORT (if needed)
+use extended ACL:
+config t
+access-list 100 permit tcp any host 192.168.102.129 eq 80
+access-list 100 permit tcp any host 192.168.102.129 eq 443
+access-list 101 permit tcp any host 192.168.103.129 eq 22
+access-list 101 permit tcp any host 192.168.103.129 eq 53
+access-list 101 permit icmp any host 192.168.103.129
+int gi 2
+ip access-group 100 in
+int gi 3
+ip access-group 101 in
+end
+
+int gi 2
+no ip access-group 100 in
+int gi 3
+no ip access-group 101 in
+end
+
+
+NAMED extended ACL:
+config t
+ip access-list extended FW1
+permit tcp any host 192.168.102.129 eq 80
+permit tcp any host 192.168.102.129 eq 443
+ip access-list extended FW2
+permit tcp any host 192.168.103.129 eq 22
+permit tcp any host 192.168.103.129 eq 53
+permit icmp any host 192.168.103.129
+int gi 2
+ip access-group FW1 in
+int gi 3
+ip access-group FW2 in
+end
+
+My Task:
+
+for Gi2 = ping, telnet,dns,web
+
+for Gi3 = ssh, daytime, chargen, secure web/https
+
+config t
+ip access-list extended FW1
+permit icmp any host 192.168.102.129
+permit tcp any host 192.168.102.129 eq 23
+permit tcp any host 192.168.102.129 eq 53
+permit tcp any host 192.168.102.129 eq 80
+ip access-list extended FW2
+permit tcp any host 192.168.103.129 eq 22
+permit tcp any host 192.168.103.129 eq 13
+permit tcp any host 192.168.103.129 eq 19
+permit tcp any host 192.168.103.129 eq 443
+int gi 2
+ip access-group FW1 in
+int gi 3
+ip access-group FW2 in
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
