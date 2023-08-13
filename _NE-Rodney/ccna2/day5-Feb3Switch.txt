@@ -585,11 +585,52 @@ ELECTION of ROOT PORT ( THE LOWEST WIN )
 2. COST - GIGA - 4, FE - 19
 3. PORT NUMBER
 
+ROOT
+LIS - 15sec
+LRN - 15sec
+FRW
 
+802.1W - RSTP (Rapid - STP)
+(config kay BOSS)ROOT
+conf t
+spanning-tree mode rapid-pvst
+spanning-tree backbonefast   
+interface range fa 0/1 - 8
+switchport mode access
+spanning-tree portfast
 
+(config kay ALALAY)/NON-ROOT
+conf t
+spanning-tree mode rapid-pvst
+spanning-tree uplinkfast   
+interface range fa 0/1 - 8
+switchport mode access
+spanning-tree portfast
 
+PORT SECURITY
 
+config t
+int fa0/1
+switchport port-security
+switchport port-security mac-address sticky
+switchport port-security maximum 1
+switchport port-security violation shutdown
+end
 
+sh port-security address
+sh int status err-disable
+
+conf t
+int fa0/1
+shut
+no shut
+
+(fa 0/2 - ip phone - pc)
+config t
+int fa 0/2
+sw access vlan 1
+sw voice vlan 100
+end
 
 
 
