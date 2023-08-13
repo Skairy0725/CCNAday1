@@ -480,3 +480,24 @@ how to get certified:
 3. ask sa CHAT: "latest reivewer"
 
 
+802.1Q -DTP- Dynamic Trunking Protocol
+
+conf t
+int range fa0/10 - 12
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 1,100
+sh int trunk
+
+SWTAAS first then baba
+conf t
+no spanning-tree vlan 1
+no spanning-tree vlan 100
+end
+
+
+
+
+trunk allow multiple vlans in a single port
+
+
