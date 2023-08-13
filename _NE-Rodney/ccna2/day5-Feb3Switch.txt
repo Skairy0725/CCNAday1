@@ -489,15 +489,26 @@ switchport mode trunk
 switchport trunk allowed vlan 1,100
 sh int trunk
 
+trunk allow multiple vlans in a single port
+
 SWTAAS first then baba
 conf t
 no spanning-tree vlan 1
 no spanning-tree vlan 100
 end
 
+Broadcast storm/L2 Loop
 
 
 
-trunk allow multiple vlans in a single port
+
+
+
+
+
+
+
+
+
 
 
