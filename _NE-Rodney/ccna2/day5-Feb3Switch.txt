@@ -493,13 +493,18 @@ trunk allow multiple vlans in a single port
 
 SWTAAS first then baba
 conf t
-spanning-tree vlan 1
-spanning-tree vlan 100
+no spanning-tree vlan 1
+no spanning-tree vlan 100
 end
 
 Broadcast storm/L2 Loop
 
 STP - Spanning Tree P
+
+conf t
+spanning-tree vlan 1
+spanning-tree vlan 100
+end
 
 SwitchTAAS(config-if-range)#do sh spanning-tree vlan 1
 
@@ -632,6 +637,27 @@ sw access vlan 1
 sw voice vlan 100
 end
 
+ETHERCHANNEL
+
+conf t
+int range fa0/10 - 12
+shut
+channel-group 1 mode active
+channel-protocol lacp
+no shut
+int port-channel 1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+sh etherchannel summary
+sh int po1 | inc BW
 
 
+conf t
+no spanning-tree vlan 1
+no spanning-tree vlan 100
+end
+
+swtaas/swbaba/edge
+erase startup-config
+reload
 
